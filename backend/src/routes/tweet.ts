@@ -1,6 +1,6 @@
 import { Router, Response } from 'express';
 import { db } from '../db';
-import { tweets, tweetMedia, likes, bookmarks, retweets, polls, pollVotes, notifications, trends, geoTags, contentClassification } from '../db/schema';
+import { users, followers, tweets, tweetMedia, likes, bookmarks, retweets, polls, pollVotes, notifications, trends, geoTags, contentClassification } from '../db/schema';
 import { authenticate, optionalAuth } from '../middleware/auth';
 import { AuthRequest } from '../types';
 import { eq, and, or, desc, sql, inArray, lt, gte, isNull } from 'drizzle-orm';

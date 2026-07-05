@@ -6,7 +6,7 @@ export interface AuthPayload {
   role: string;
 }
 
-export interface AuthRequest extends Request {
+export interface AuthRequest extends Request<any, any, any, any, any> {
   user?: AuthPayload;
 }
 
