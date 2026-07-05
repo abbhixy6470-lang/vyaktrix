@@ -40,7 +40,7 @@ function FeedPage() {
   const handleLike = async (tweetId: string) => {
     try {
       await api.post(`/tweet/like/${tweetId}`);
-      setTweets((prev) => prev.map((t) => t.id === tweetId ? { ...t, likeCount: t.liked ? t.likeCount - 1 : t.likeCount + 1, liked: !t.liked } : t));
+      setTweets((prev) => prev.map((t) => t.id === tweetId ? { ...t, likeCount: t.likeCount + 1 } : t));
     } catch {}
   };
 
