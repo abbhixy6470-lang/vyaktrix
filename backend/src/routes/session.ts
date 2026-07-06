@@ -3,7 +3,7 @@ import { db } from '../db';
 import { sessions } from '../db/schema';
 import { authenticate } from '../middleware/auth';
 import { AuthRequest } from '../types';
-import { eq, desc } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 
 const router = Router();
 

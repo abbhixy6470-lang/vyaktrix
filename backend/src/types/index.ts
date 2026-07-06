@@ -1,13 +1,18 @@
-import { Request } from 'express';
-
 export interface AuthPayload {
   userId: string;
   username: string;
   role: string;
 }
 
-export interface AuthRequest extends Request<any, any, any, any, any> {
+export interface AuthRequest {
   user?: AuthPayload;
+  body: any;
+  params: Record<string, string>;
+  query: Record<string, string | string[] | undefined>;
+  headers: Record<string, string | undefined>;
+  app: any;
+  ip?: string;
+  socket: any;
 }
 
 export interface PaginationQuery {
