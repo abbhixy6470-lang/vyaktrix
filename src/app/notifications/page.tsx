@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { Notification } from '@/types';
@@ -82,6 +82,4 @@ function NotificationsPage() {
   );
 }
 
-export default function Notifications() {
-  return <AuthProvider><NotificationsPage /></AuthProvider>;
-}
+export default NotificationsPage;

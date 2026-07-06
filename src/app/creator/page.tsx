@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 
@@ -117,6 +117,4 @@ function CreatorPage() {
   );
 }
 
-export default function Creator() {
-  return <AuthProvider><CreatorPage /></AuthProvider>;
-}
+export default CreatorPage;

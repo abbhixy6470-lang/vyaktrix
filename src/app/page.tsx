@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -100,10 +100,4 @@ function HomePage() {
   );
 }
 
-export default function App() {
-  return (
-    <AuthProvider>
-      <HomePage />
-    </AuthProvider>
-  );
-}
+export default HomePage;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -85,6 +85,4 @@ function DashboardPage() {
   );
 }
 
-export default function Dashboard() {
-  return <AuthProvider><DashboardPage /></AuthProvider>;
-}
+export default DashboardPage;

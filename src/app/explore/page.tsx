@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -139,6 +139,4 @@ function ExplorePage() {
   );
 }
 
-export default function Explore() {
-  return <AuthProvider><ExplorePage /></AuthProvider>;
-}
+export default ExplorePage;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -94,6 +94,4 @@ function CommunityDetail({ params }: { params: { id: string } }) {
   );
 }
 
-export default function CommunityPage({ params }: { params: { id: string } }) {
-  return <AuthProvider><CommunityDetail params={params} /></AuthProvider>;
-}
+export default CommunityDetail;

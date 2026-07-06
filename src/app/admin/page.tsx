@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/layout/Sidebar';
@@ -136,6 +136,4 @@ function AdminPage() {
   );
 }
 
-export default function Admin() {
-  return <AuthProvider><AdminPage /></AuthProvider>;
-}
+export default AdminPage;

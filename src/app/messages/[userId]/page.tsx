@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { Message } from '@/types';
@@ -107,6 +107,4 @@ function MessageThread({ params }: { params: { userId: string } }) {
   );
 }
 
-export default function Thread({ params }: { params: { userId: string } }) {
-  return <AuthProvider><MessageThread params={params} /></AuthProvider>;
-}
+export default MessageThread;

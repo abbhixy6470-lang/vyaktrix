@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { Tweet } from '@/types';
@@ -138,6 +138,4 @@ function TweetDetail({ params }: { params: { id: string } }) {
   );
 }
 
-export default function TweetPage({ params }: { params: { id: string } }) {
-  return <AuthProvider><TweetDetail params={params} /></AuthProvider>;
-}
+export default TweetDetail;

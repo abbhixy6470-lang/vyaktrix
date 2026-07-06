@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { Tweet } from '@/types';
@@ -150,6 +150,4 @@ function FeedPage() {
   );
 }
 
-export default function Feed() {
-  return <AuthProvider><FeedPage /></AuthProvider>;
-}
+export default FeedPage;

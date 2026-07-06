@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -127,6 +127,4 @@ function ProfilePage({ params }: { params: { id: string } }) {
   );
 }
 
-export default function Profile({ params }: { params: { id: string } }) {
-  return <AuthProvider><ProfilePage params={params} /></AuthProvider>;
-}
+export default ProfilePage;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -100,6 +100,4 @@ function AudioRoomPage({ params }: { params: { id: string } }) {
   );
 }
 
-export default function AudioRoom({ params }: { params: { id: string } }) {
-  return <AuthProvider><AudioRoomPage params={params} /></AuthProvider>;
-}
+export default AudioRoomPage;

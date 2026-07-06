@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -96,6 +96,4 @@ function AudioPage() {
   );
 }
 
-export default function Audio() {
-  return <AuthProvider><AudioPage /></AuthProvider>;
-}
+export default AudioPage;

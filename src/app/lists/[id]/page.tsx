@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -108,6 +108,4 @@ function ListDetail({ params }: { params: { id: string } }) {
   );
 }
 
-export default function ListPage({ params }: { params: { id: string } }) {
-  return <AuthProvider><ListDetail params={params} /></AuthProvider>;
-}
+export default ListDetail;

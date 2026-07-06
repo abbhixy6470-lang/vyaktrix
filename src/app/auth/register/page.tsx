@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -263,6 +263,4 @@ function RegisterPage() {
   );
 }
 
-export default function Register() {
-  return <AuthProvider><RegisterPage /></AuthProvider>;
-}
+export default RegisterPage;

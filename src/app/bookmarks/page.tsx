@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -78,6 +78,4 @@ function BookmarksPage() {
   );
 }
 
-export default function Bookmarks() {
-  return <AuthProvider><BookmarksPage /></AuthProvider>;
-}
+export default BookmarksPage;

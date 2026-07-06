@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AuthProvider, useAuth } from '@/store/AuthContext';
+import { useAuth } from '@/store/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -74,6 +74,4 @@ function LoginPage() {
   );
 }
 
-export default function Login() {
-  return <AuthProvider><LoginPage /></AuthProvider>;
-}
+export default LoginPage;
