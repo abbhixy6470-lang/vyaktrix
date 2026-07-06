@@ -22,7 +22,8 @@ function RegisterPage() {
       await register(username, email, password);
       router.push('/');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed. Try again.');
+      console.error('Registration error:', err);
+      setError(err.response?.data?.error || err.message || 'Registration failed. Try again.');
     } finally {
       setLoading(false);
     }
