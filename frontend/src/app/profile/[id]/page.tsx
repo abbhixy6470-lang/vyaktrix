@@ -11,8 +11,8 @@ import Link from 'next/link';
 function ProfilePage({ params }: { params: { id: string } }) {
   const { user: me } = useAuth();
   const router = useRouter();
-  const [profile, setProfile] = useState<User | null>(null);
-  const [tweets, setTweets] = useState<Tweet[]>([]);
+  const [profile, setProfile] = useState<any>(null);
+  const [tweets, setTweets] = useState<any[]>([]);
   const [tab, setTab] = useState<'tweets' | 'media' | 'likes'>('tweets');
 
   useEffect(() => {
