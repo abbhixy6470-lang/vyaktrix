@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
-import { User, Tweet } from '@/types';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -32,7 +31,7 @@ function ProfilePage({ params }: { params: { id: string } }) {
   const handleFollow = async () => {
     try {
       const { data } = await api.post(`/user/follow/${params.id}`);
-      setProfile((prev) => prev ? {
+      setProfile((prev: any) => prev ? {
         ...prev,
         followerCount: data.message === 'Followed' ? prev.followerCount + 1 : prev.followerCount - 1,
         isFollowing: data.message === 'Followed',
