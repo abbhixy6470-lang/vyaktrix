@@ -43,52 +43,74 @@ function CreatorPage() {
     } catch {}
   };
 
+  if (loading) return (
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
-      <main className="flex-1 border-r border-gray-800 max-w-2xl p-4 space-y-4">
-        <h1 className="text-xl font-bold">Creator Monetization</h1>
+      <main className="flex-1 border-r border-gray-800 max-w-2xl p-6 space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold">$</div>
+          <h1 className="text-2xl font-bold text-white">Creator Monetization</h1>
+        </div>
 
-        <div className="bg-gray-900 rounded-xl p-4 space-y-3">
-          <h2 className="font-bold">Your Subscribers ({subscribers.length})</h2>
+        <div className="card">
+          <h2 className="font-bold text-white mb-4">Your Subscribers ({subscribers.length})</h2>
           {subscribers.map((s: any) => (
-            <div key={s.id} className="flex items-center gap-3 text-sm">
-              <div className="w-8 h-8 rounded-full bg-gray-700" />
-              <span>{s.subscriberId?.slice(0, 8)} - {s.tier} (${s.price}/mo)</span>
+            <div key={s.id} className="flex items-center gap-3 py-2 border-b border-gray-800 last:border-0">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-xs text-white font-bold">
+                {s.subscriberId?.[0]?.toUpperCase() || '?'}
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-white">{s.subscriberId?.slice(0, 8)}</p>
+                <p className="text-xs text-gray-500">{s.tier} — ${s.price}/mo</p>
+              </div>
             </div>
           ))}
-          {!subscribers.length && <p className="text-gray-500 text-sm">No subscribers yet</p>}
+          {!subscribers.length && <p className="text-sm text-gray-500">No subscribers yet</p>}
         </div>
 
-        <div className="bg-gray-900 rounded-xl p-4 space-y-3">
-          <h2 className="font-bold">Subscribe to a Creator</h2>
-          <input placeholder="Creator user ID" value={creatorId} onChange={(e) => setCreatorId(e.target.value)}
-            className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-          <select value={tier} onChange={(e) => setTier(e.target.value)} className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm">
-            <option value="basic">Basic ($3/mo)</option>
-            <option value="premium">Premium ($10/mo)</option>
-            <option value="vip">VIP ($25/mo)</option>
-          </select>
-          <button onClick={subscribe} className="bg-primary text-white px-4 py-2 rounded-full font-bold text-sm">Subscribe</button>
+        <div className="card">
+          <h2 className="font-bold text-white mb-4">Subscribe to a creator</h2>
+          <div className="space-y-3">
+            <input placeholder="Creator user ID" value={creatorId} onChange={(e) => setCreatorId(e.target.value)}
+              className="input-field text-sm" />
+            <select value={tier} onChange={(e) => setTier(e.target.value)}
+              className="input-field text-sm">
+              <option value="basic">Basic ($3/mo)</option>
+              <option value="premium">Premium ($10/mo)</option>
+              <option value="vip">VIP ($25/mo)</option>
+            </select>
+            <button onClick={subscribe} disabled={!creatorId}
+              className="btn-primary py-2 px-5 text-sm">Subscribe</button>
+          </div>
         </div>
 
-        <div className="bg-gray-900 rounded-xl p-4 space-y-3">
-          <h2 className="font-bold">Send a Tip</h2>
-          <input placeholder="Recipient user ID" value={tipReceiver} onChange={(e) => setTipReceiver(e.target.value)}
-            className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-          <input type="number" placeholder="Amount (USD cents)" value={tipAmount} onChange={(e) => setTipAmount(parseInt(e.target.value) || 0)}
-            className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-          <button onClick={sendTip} className="bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm">Send Tip</button>
+        <div className="card">
+          <h2 className="font-bold text-white mb-4">Send a tip</h2>
+          <div className="space-y-3">
+            <input placeholder="Recipient user ID" value={tipReceiver} onChange={(e) => setTipReceiver(e.target.value)}
+              className="input-field text-sm" />
+            <input type="number" placeholder="Amount (USD cents)" value={tipAmount} onChange={(e) => setTipAmount(parseInt(e.target.value) || 0)}
+              className="input-field text-sm" />
+            <button onClick={sendTip} disabled={!tipReceiver || tipAmount <= 0}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-5 rounded-xl transition text-sm">Send tip</button>
+          </div>
         </div>
 
-        <div className="bg-gray-900 rounded-xl p-4">
-          <h2 className="font-bold">Your Subscriptions</h2>
+        <div className="card">
+          <h2 className="font-bold text-white mb-4">Your subscriptions</h2>
           {subscriptions.map((s: any) => (
-            <div key={s.id} className="text-sm mt-2">
-              {s.creatorId?.slice(0, 8)} - {s.tier} (${s.price}/mo)
+            <div key={s.id} className="flex items-center justify-between py-2 border-b border-gray-800 last:border-0">
+              <p className="text-sm text-white">{s.creatorId?.slice(0, 8)}</p>
+              <p className="text-xs text-gray-400">{s.tier} — ${s.price}/mo</p>
             </div>
           ))}
-          {!subscriptions.length && <p className="text-gray-500 text-sm mt-2">No active subscriptions</p>}
+          {!subscriptions.length && <p className="text-sm text-gray-500">No active subscriptions</p>}
         </div>
       </main>
     </div>

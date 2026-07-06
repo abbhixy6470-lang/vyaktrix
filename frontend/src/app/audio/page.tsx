@@ -32,34 +32,64 @@ function AudioPage() {
     } catch {}
   };
 
-  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary"></div></div>;
+  if (loading) return (
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
   if (!user) return null;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
-      <main className="flex-1 border-r border-gray-800 max-w-2xl p-4 space-y-4">
-        <h1 className="text-xl font-bold">Spaces</h1>
-        <div className="bg-gray-900 rounded-xl p-4 space-y-3">
-          <h2 className="font-bold">Start a Space</h2>
-          <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-          <input placeholder="Description (optional)" value={description} onChange={(e) => setDescription(e.target.value)}
-            className="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-          <button onClick={createRoom} className="bg-primary text-white px-4 py-2 rounded-full font-bold text-sm">Start</button>
+      <main className="flex-1 border-r border-gray-800 max-w-2xl">
+        <div className="sticky top-0 z-10 backdrop-blur-md bg-black/70 border-b border-gray-800">
+          <div className="px-6 py-4">
+            <h1 className="text-xl font-bold text-white">Spaces</h1>
+          </div>
         </div>
-        <h2 className="font-bold">Live Now</h2>
-        <div className="space-y-2">
-          {rooms.map((room) => (
-            <div key={room.id} onClick={() => router.push(`/audio/${room.id}`)} className="bg-gray-900 rounded-xl p-4 cursor-pointer hover:bg-gray-800">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                <h3 className="font-bold">{room.title}</h3>
-              </div>
-              <p className="text-sm text-gray-500 mt-1">{room.listenerCount} listening</p>
+        <div className="p-6 space-y-6">
+          <div className="card bg-gradient-to-br from-gray-900 to-gray-950 border-primary/20">
+            <h2 className="font-bold text-white mb-3">Start a space</h2>
+            <div className="space-y-3">
+              <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}
+                className="input-field text-sm" />
+              <input placeholder="Description (optional)" value={description} onChange={(e) => setDescription(e.target.value)}
+                className="input-field text-sm" />
+              <button onClick={createRoom} disabled={!title.trim()}
+                className="btn-primary py-2 px-5 text-sm">Start</button>
             </div>
-          ))}
-          {!rooms.length && <p className="text-gray-500 text-sm">No active spaces</p>}
+          </div>
+          <div>
+            <h2 className="font-bold text-white mb-3">Live now</h2>
+            <div className="space-y-3">
+              {rooms.map((room) => (
+                <div key={room.id} onClick={() => router.push(`/audio/${room.id}`)}
+                  className="card cursor-pointer group">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-lg shrink-0">
+                        ♪
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-green-500 animate-pulse-dot border-2 border-black" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-white group-hover:text-primary transition">{room.title}</p>
+                      {room.description && <p className="text-sm text-gray-500 truncate">{room.description}</p>}
+                      <p className="text-xs text-green-400 mt-1">{room.listenerCount} listening</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {!rooms.length && (
+                <div className="text-center py-12 text-gray-500">
+                  <div className="text-4xl mb-3 opacity-20">♪</div>
+                  <p>No active spaces</p>
+                  <p className="text-sm text-gray-600 mt-1">Start one to begin</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </div>

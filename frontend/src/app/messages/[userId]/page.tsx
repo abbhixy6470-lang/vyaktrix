@@ -42,32 +42,64 @@ function MessageThread({ params }: { params: { userId: string } }) {
     }
   };
 
-  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary"></div></div>;
+  if (loading) return (
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
   if (!user) return null;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
       <main className="flex-1 border-r border-gray-800 max-w-2xl flex flex-col">
-        <div className="p-4 border-b border-gray-800">
-          <h1 className="text-xl font-bold">Chat with {params.userId.slice(0, 8)}</h1>
+        <div className="sticky top-0 z-10 backdrop-blur-md bg-black/70 border-b border-gray-800">
+          <div className="flex items-center gap-4 px-6 py-4">
+            <button onClick={() => router.push('/messages')} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-gray-800 transition">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-white font-bold shrink-0">
+              {params.userId[0].toUpperCase()}
+            </div>
+            <h1 className="text-lg font-bold text-white">User {params.userId.slice(0, 8)}</h1>
+          </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div className="flex-1 overflow-y-auto p-6 space-y-3" style={{ minHeight: '400px' }}>
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.senderId === user.id ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[70%] rounded-xl px-4 py-2 ${msg.senderId === user.id ? 'bg-primary' : 'bg-gray-800'}`}>
-                <p className="text-sm">{msg.content}</p>
-                <p className="text-xs text-gray-400 mt-1">{new Date(msg.createdAt).toLocaleTimeString()}</p>
+            <div key={msg.id} className={`flex ${msg.senderId === user.id ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+              <div className={`max-w-[70%] rounded-2xl px-5 py-3 ${
+                msg.senderId === user.id
+                  ? 'bg-gradient-to-r from-primary to-purple-600 text-white rounded-br-sm'
+                  : 'bg-gray-800 text-gray-200 rounded-bl-sm'
+              }`}>
+                <p className="text-sm leading-relaxed">{msg.content}</p>
+                <p className={`text-xs mt-1.5 ${msg.senderId === user.id ? 'text-white/60' : 'text-gray-500'}`}>
+                  {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
               </div>
             </div>
           ))}
+          {!messages.length && (
+            <div className="text-center py-16 text-gray-500">
+              <p>No messages yet</p>
+              <p className="text-sm text-gray-600 mt-1">Send a message to start the conversation</p>
+            </div>
+          )}
           <div ref={bottomRef} />
         </div>
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex gap-2">
-            <input value={content} onChange={(e) => setContent(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder="Type a message..." className="flex-1 bg-gray-900 border border-gray-700 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-primary" />
-            <button onClick={sendMessage} className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold">Send</button>
+        <div className="p-4 border-t border-gray-800 bg-black/80 backdrop-blur-md">
+          <div className="flex gap-3">
+            <input value={content} onChange={(e) => setContent(e.target.value)} onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+            }}
+              placeholder="Type a message..."
+              className="flex-1 bg-gray-900 border border-gray-700 rounded-full px-5 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary transition" />
+            <button onClick={sendMessage} disabled={!content.trim()}
+              className="w-11 h-11 rounded-full bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition active:scale-95">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </button>
           </div>
         </div>
       </main>

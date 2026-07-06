@@ -29,17 +29,31 @@ import sessionRoutes from './routes/session';
 const app = express();
 const httpServer = createServer(app);
 
-const io = new SocketServer(httpServer, {
-  cors: {
-    origin: config.frontendUrl,
-    credentials: true,
+const allowedOrigins = [
+  config.frontendUrl,
+  /\.vercel\.app$/,
+  /localhost:\d+$/,
+];
+
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin || allowedOrigins.some((o) => (typeof o === 'string' ? o === origin : o.test(origin)))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
+  credentials: true,
+};
+
+const io = new SocketServer(httpServer, {
+  cors: corsOptions,
 });
 
 app.set('io', io);
 
 app.use(helmet());
-app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
