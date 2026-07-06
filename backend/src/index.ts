@@ -30,20 +30,8 @@ import sessionRoutes from './routes/session';
 const app = express();
 const httpServer = createServer(app);
 
-const allowedOrigins = [
-  config.frontendUrl,
-  /\.vercel\.app$/,
-  /localhost:\d+$/,
-];
-
 const corsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    if (!origin || allowedOrigins.some((o) => (typeof o === 'string' ? o === origin : o.test(origin)))) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   credentials: true,
 };
 
@@ -53,8 +41,8 @@ const io = new SocketServer(httpServer, {
 
 app.set('io', io);
 
-app.use(helmet());
 app.use(cors(corsOptions));
+app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
