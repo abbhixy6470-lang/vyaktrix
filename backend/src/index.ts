@@ -90,8 +90,13 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(config.port, () => {
-  console.log(`Vyaktrix 2.0 server running on port ${config.port}`);
+httpServer.listen(config.port, '0.0.0.0', () => {
+  console.log(`Vyaktrix 2.0 server running on port ${config.port} (${config.nodeEnv})`);
+});
+
+httpServer.on('error', (err) => {
+  console.error('Server failed to start:', err);
+  process.exit(1);
 });
 
 process.on('SIGTERM', async () => {
