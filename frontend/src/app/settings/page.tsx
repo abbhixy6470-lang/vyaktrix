@@ -1,15 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '@/store/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
 function SettingsPage() {
-  const { user, updateUser, logout } = useAuth();
+  const { user, loading, updateUser, logout } = useAuth();
   const router = useRouter();
   const [displayName, setDisplayName] = useState(user?.displayName || '');
+
+  useEffect(() => {
+    if (!loading && !user) router.push('/auth/login');
+  }, [user, loading, router]);
   const [bio, setBio] = useState(user?.bio || '');
   const [website, setWebsite] = useState(user?.website || '');
   const [location, setLocation] = useState(user?.location || '');

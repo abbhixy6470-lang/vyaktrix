@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#6366f1',
           50: '#eef2ff',
           100: '#e0e7ff',
           200: '#c7d2fe',
@@ -21,6 +22,12 @@ const config: Config = {
           800: '#3730a3',
           900: '#312e81',
         },
+        'primary-dark': '#4f46e5',
+        'primary-light': '#818cf8',
+        warning: '#f59e0b',
+        success: '#22c55e',
+        danger: '#ef4444',
+        info: '#3b82f6',
         dark: {
           50: '#f8fafc',
           100: '#f1f5f9',
