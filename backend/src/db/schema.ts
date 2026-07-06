@@ -11,6 +11,8 @@ export const users = pgTable('users', {
   banner: text('banner'),
   website: text('website'),
   location: text('location'),
+  dateOfBirth: varchar('date_of_birth', { length: 10 }),
+  termsAccepted: boolean('terms_accepted').default(false),
   verified: boolean('verified').default(false),
   private: boolean('private').default(false),
   deactivated: boolean('deactivated').default(false),

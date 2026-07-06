@@ -20,9 +20,13 @@ const generateTokens = (payload: { userId: string; username: string; role: strin
 
 router.post('/register', authLimiter, async (req: AuthRequest, res: Response) => {
   try {
-    const { username, email, password, displayName } = req.body;
+    const { username, email, password, displayName, dateOfBirth, termsAccepted } = req.body;
     if (!username || !email || !password) {
       res.status(400).json({ success: false, error: 'Username, email, and password required' });
+      return;
+    }
+    if (!termsAccepted) {
+      res.status(400).json({ success: false, error: 'You must accept the terms of service' });
       return;
     }
     const existing = await db.select().from(users).where(eq(users.email, email)).limit(1);
@@ -33,6 +37,7 @@ router.post('/register', authLimiter, async (req: AuthRequest, res: Response) =>
     const passwordHash = await bcrypt.hash(password, 12);
     const [newUser] = await db.insert(users).values({
       username, email, passwordHash, displayName: displayName || username,
+      dateOfBirth, termsAccepted,
     }).returning();
     const payload = { userId: newUser.id, username: newUser.username, role: newUser.role || 'user' };
     const tokens = generateTokens(payload);

@@ -7,6 +7,7 @@ import { createServer } from 'http';
 import { Server as SocketServer } from 'socket.io';
 import { config } from './config';
 import { pool } from './db';
+import { setupDatabase } from './db/setup';
 
 // Route imports
 import authRoutes from './routes/auth';
@@ -104,9 +105,22 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(config.port, '0.0.0.0', () => {
-  console.log(`Vyaktrix 2.0 server running on port ${config.port} (${config.nodeEnv})`);
-});
+if (config.nodeEnv === 'production') {
+  setupDatabase().then(() => {
+    httpServer.listen(config.port, '0.0.0.0', () => {
+      console.log(`Vyaktrix 2.0 server running on port ${config.port} (${config.nodeEnv})`);
+    });
+  }).catch((err) => {
+    console.error('Database setup failed, starting server anyway:', err);
+    httpServer.listen(config.port, '0.0.0.0', () => {
+      console.log(`Vyaktrix 2.0 server running on port ${config.port} (${config.nodeEnv})`);
+    });
+  });
+} else {
+  httpServer.listen(config.port, '0.0.0.0', () => {
+    console.log(`Vyaktrix 2.0 server running on port ${config.port} (${config.nodeEnv})`);
+  });
+}
 
 httpServer.on('error', (err) => {
   console.error('Server failed to start:', err);
